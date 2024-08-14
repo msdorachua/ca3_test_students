@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Discount Codes</title>
+    <link href="/main.css" rel="stylesheet" />
+    <link href="/index.css" rel="stylesheet" />
+    <link href="./index.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a href="/admin/dashboard/">Dashboard</a>
+        <a href="/admin/saleOrder">Sale Order</a>
+        <a href="/admin/supplier">Supplier</a>
+        <a href="/admin/discounts">Discounts</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </header>
+    <section>
+        <h1>Test Route</h1>
+       
+        <table id="discountsTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Discount Value</th>
+                    <th>Max Usage Count</th>
+                    <th>Valid From</th>
+                    <th>Valid Until</th>
+                    <th>Is Active</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Discount codes will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </section>
+    <script src="index.js"></script>
+    <script src="/admin/authAdmin.js" type="text/javascript"></script>
+</body>
+</html>

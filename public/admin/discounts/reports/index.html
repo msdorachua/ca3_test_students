@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Codes Management</title>
+    <link href="/main.css" rel="stylesheet" />
+    <link href="/index.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a href="../../dashboard/">Dashboard</a>
+        <a href="../../saleOrder/">Sale Order</a>
+        <a href="../../supplier/">Supplier</a>
+        <a href="../">Discounts</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </header>
+    <h1>Popular Discount Codes</h1>
+
+    <section>
+        <h2>Most Grabbed Discount Codes</h2>
+        <table id="popular-by-users-table" border="1">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Discount Value</th>
+                    <th>Max Usage</th>
+                    <th>Current Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Discount codes will be dynamically inserted here -->
+            </tbody>
+        </table>
+
+        <h2>Top Users by Discount Code Grabs</h2>
+        <table id="top-users-table" border="1">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Discount Codes Grabbed</th>
+                    <th>Codes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Top users will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </section>
+    <!-- Link to the JavaScript file handling creation -->
+    <script src="index.js"></script>
+    <script src="../../authAdmin.js" type="text/javascript"></script>
+</body>
+</html>

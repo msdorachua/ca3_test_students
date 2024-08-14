@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model member {
+  id                   Int         @id @default(autoincrement())
+  username             String      @unique @db.VarChar(50)
+  email                String      @unique @db.VarChar(50)
+  dob                  DateTime    @db.Date
+  password             String      @db.VarChar(255)
+  role                 Int
+  gender               String      @db.Char(1)
+  lastLoginOn          DateTime?   @default(now()) @map("last_login_on") @db.Timestamp(6)
+  clv                  Decimal?    @db.Decimal(10, 3)
+  runningTotalSpending Decimal?    @map("running_total_spending") @db.Decimal(10, 3)
+  memberRole           memberRole  @relation(fields: [role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_member_role_id")
+  saleOrder            saleOrder[]
+  memberDiscountCodes  memberDiscountCode[]
+}
+
+model memberRole {
+  id     Int      @id @default(autoincrement())
+  name   String?  @db.VarChar(25)
+  member member[]
+
+  @@map("member_role")
+}
+
+model product {
+  id             Int             @id @default(autoincrement())
+  name           String?         @db.VarChar(255)
+  description    String?
+  unitPrice      Decimal         @map("unit_price") @db.Decimal
+  stockQuantity  Decimal         @default(0) @map("stock_quantity") @db.Decimal
+  country        String?         @db.VarChar(100)
+  productType    String?         @map("product_type") @db.VarChar(50)
+  imageUrl       String?         @default("/images/product.png") @map("image_url") @db.VarChar(255)
+  manufacturedOn DateTime?       @map("manufactured_on") @db.Timestamp(6)
+  saleOrderItem  saleOrderItem[]
+}
+
+model saleOrder {
+  id            Int             @id @default(autoincrement())
+  memberId      Int?            @map("member_id")
+  orderDatetime DateTime        @map("order_datetime") @db.Timestamp(6)
+  status        String?         @db.VarChar(10)
+  member        member?         @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_sale_order_member")
+  saleOrderItem saleOrderItem[]
+
+  @@map("sale_order")
+}
+
+model saleOrderItem {
+  id          Int       @id @default(autoincrement())
+  saleOrderId Int       @map("sale_order_id")
+  productId   Int       @map("product_id")
+  quantity    Decimal   @db.Decimal
+  product     product   @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_sale_order_item_product")
+  saleOrder   saleOrder @relation(fields: [saleOrderId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_sale_order_item_sale_order")
+
+  @@map("sale_order_item")
+}
+
+
+model discountCode {
+  id                  Int                  @id @default(autoincrement())
+  code                String               @unique @db.VarChar(50)
+  description         String?              @db.VarChar(255) @map("description")
+  discountValue       Decimal              @db.Decimal(10, 2) @map("discount_value") // Fixed amount discount
+  maxUsageCount       Int                  @default(0) @map("max_usage_count")      // Maximum number of times this code can be used
+  usageCount          Int                  @default(0) @map("usage_count")          // Number of times this code has been used
+  validFrom           DateTime             @db.Timestamp(6) @map("valid_from")
+  validUntil          DateTime             @db.Timestamp(6) @map("valid_until")
+  isActive            Boolean              @default(true) @map("is_active")
+  memberDiscountCodes memberDiscountCode[]
+
+  @@map("discount_code")
+}
+
+model memberDiscountCode {
+  id              Int          @id @default(autoincrement())
+  memberId        Int          @map("member_id")
+  discountCodeId  Int          @map("discount_code_id")
+  grabbedAt       DateTime     @default(now()) @db.Timestamp(6) @map("grabbed_at")
+  member          member       @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_member_discount_code_member")
+  discountCode    discountCode @relation(fields: [discountCodeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_member_discount_code_discount_code")
+
+  @@unique([memberId, discountCodeId])
+  
+  @@map("member_discount_code")
+}

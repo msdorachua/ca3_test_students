@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="/main.css" rel="stylesheet" />
+    <link href="/index.css" rel="stylesheet" />
+    <link href="./styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <a href="../../product/">Product</a>
+        <a href="../../review/">Review</a>
+        <a href="../../favourite/">Favourite</a>
+        <a href="../">Discounts</a>
+        <a href="../../cart/">Cart</a>
+        <a href="#" onclick="logout()">Logout</a>   
+    </header>
+    <section style="height: auto">
+        <div>
+            <h1>Available Discount Codes</h1>
+            <table id="discountCodesTable">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Value</th>
+                        <th>Max Usage</th>
+                        <th>Valid From</th>
+                        <th>Valid Until</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Discount codes will be inserted here -->
+                </tbody>
+            </table>
+
+            <script src="index.js"></script>
+        </div>
+    </section>
+    <script src="/auth.js" type="text/javascript"></script>
+</body>
+
+</html>
